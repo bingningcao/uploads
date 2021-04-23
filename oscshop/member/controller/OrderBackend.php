@@ -144,6 +144,17 @@ class OrderBackend extends AdminBase{
 			// 小冰
 				if($is_customized == 1){
 					Db::name('goods')->where(array('goods_id'=>$goods_id))->update(array('price'=>$data['price']));
+					// include ROOT_PATH .'extend/aliyunmessage/api_demo/SmsDemo.php';
+					// $con = array(
+					// 	'mobile'			=>	'',//接收信息的手机号,
+					// 	'setSignName'		=>	'',//签名名称
+					// 	'code'				=>	'',//模板code
+					// 	'setSignName'		=>	'',//发送方的名字
+					// 	'consignee'			=>	'',//收货人
+					// 	'ordermobile'		=>	'',
+					// );
+					// $response = SmsDemo::sendSms($con);
+					// $result = object_array($response);
 					//price
 				}
 			//小冰
