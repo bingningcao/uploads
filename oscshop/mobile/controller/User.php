@@ -163,31 +163,66 @@ class User extends MobileBase
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+
 	function uploads(){
 		return $this->fetch(); 
 	}
 
 
+	function preview(){
+		// $params = input('get.');
+		// $strsrc = $params['strsrc'];
+		// $scale = $params['scale'];
+		// $rotate = $params['rotate'];
+
+		// $this->assign('strsrc',$strsrc);
+		// $this->assign('scale',$scale);
+		// $this->assign('rotate',$rotate);
+		return $this->fetch();
+	}
+
+
+
+
+
 	function upImg(){
 		$getUserInfo = $this->getUserInfo(UID);
-		
-
 		$imgPath = $this->uploadFile();
 		$post = input('post.');
 		$multiple = $post['multiple']; //放大比例
 		$rotate = $post['rotate']; //旋转度数
 		$imgPath = $imgPath['path']; //图片路径
+		$num = $post['num']; //订单数量
+		$msg = $post['msg']; //订单留言
+
 		$uid = UID; //用户id
 		$username = $getUserInfo['username']; //用户名
 
+		$customized_params = array(
+			'rotate'	=>	$rotate, //旋转多少度
+			'multiple'	=>	$multiple, //放大缩小的倍数
+		);
+		$customized_params = serialize($customized_params);
+
 		$data = array(
 			'is_customized'				=>				1,
-			'name'						=>				$username.'_定制的酒瓶 【 右旋转=>'. $rotate .'度'.', 放大比例=> '. $multiple .'倍 】',
+			'name'						=>				$username.'_定制的酒瓶',
 			'customized_userid'			=>				$uid,
 			'date_added'				=>				date('Y-m-d H:i:s'), //提交时间
 			'image'						=>				$imgPath, //上传的图片
 			'status'					=>				1,//状态
-			'quantity'					=>				1,//数量
+			'quantity'					=>				$num,//数量
+			'weight_class_id'			=>				2,//默认单位（克）
+			'customized_params'			=>				$customized_params
 		);
 		$goods_id = Db::name('goods')->insertGetId($data);
 
@@ -195,60 +230,69 @@ class User extends MobileBase
 			Db::name('goods_description')->insert(['goods_id'=>$goods_id]);
 			Db::name('goods_to_category')->insert(['goods_id'=>$goods_id,'category_id'=>1]);
 
-			$order = array();
-			$order['order_num_alias'] = build_order_no();
-			$order['pay_subject'] = $username.'_定制的酒瓶 【 右旋转=>'. $rotate .'度'.', 放大比例=> '. $multiple .'倍 】';
-			$order['uid'] = $uid;
-			$order['name'] = $username;
-			$order['order_status_id'] = 3;
-			$order['date_added'] = time();
-			$order_id = Db::name('order')->insertGetId($order);
+			//订单表
+				$order = array();
+				$order['order_num_alias'] = build_order_no(); //订单号
+				$order['pay_subject'] = $username.'_定制的酒瓶';
+				$order['uid'] = $uid;
+				$order['name'] = $username;
+				$order['order_status_id'] = 3;
+				$order['date_added'] = time();
+				$order['is_customized'] = 1; //是否定制
+				$order_id = Db::name('order')->insertGetId($order);
+			//订单表
 
-			$order_goods = array();
-			$order_goods['order_id'] = $order_id;
-			$order_goods['name'] = $username.'_定制的酒瓶 【 右旋转=>'. $rotate .'度'.', 放大比例=> '. $multiple .'倍 】';
-			$order_goods['goods_id'] = $goods_id;
-			$order_goods['quantity'] = 1;
-			Db::name('order_goods')->insert($order_goods);
+			//订单商品表
+				$order_goods = array();
+				$order_goods['order_id'] = $order_id;
+				$order_goods['name'] = $username.'_定制的酒瓶';
+				$order_goods['goods_id'] = $goods_id;
+				$order_goods['quantity'] = $num;
+				Db::name('order_goods')->insert($order_goods);
+			//订单商品表
 
-			$history = array();
-			$history['order_id'] = $order_id;
-			$history['order_status_id'] = 3;
-			$history['notify'] = 0;
-			$history['date_added'] = time();
-			Db::name('order_history')->insert($history);
+			//订单历史
+				$history = array();
+				$history['order_id'] = $order_id;
+				$history['order_status_id'] = 3;
+				$history['notify'] = 0;
+				$history['date_added'] = time();
+				$history['comment'] = $msg;
+				Db::name('order_history')->insert($history);
+			//订单历史
 
+			//价格
+				$order_total = array(
+					[
+						'order_id'=>$order_id,
+						'code'=>'sub_total',
+						'title'=>'商品价格',
+						'text'=>'￥0',
+						'value'=>'0.00',
+						'sort_order'=>0
+					],
+					[
+						'order_id'=>$order_id,
+						'code'=>'shipping',
+						'title'=>'运费',
+						'text'=>'￥0',
+						'value'=>'0.00',
+						'sort_order'=>0
+					],
+					[
+						'order_id'=>$order_id,
+						'code'=>'total',
+						'title'=>'总价	',
+						'text'=>'￥0',
+						'value'=>'0.00',
+						'sort_order'=>0
+					],
+				);
+				foreach($order_total as $k=>$v){
+					Db::name('order_total')->insert($v);
+				}
+			//价格
 
-			$order_total = array(
-				[
-					'order_id'=>$order_id,
-					'code'=>'sub_total',
-					'title'=>'商品价格',
-					'text'=>'￥0',
-					'value'=>'0.00',
-					'sort_order'=>0
-				],
-				[
-					'order_id'=>$order_id,
-					'code'=>'shipping',
-					'title'=>'商品价格',
-					'text'=>'￥0',
-					'value'=>'0.00',
-					'sort_order'=>0
-				],
-				[
-					'order_id'=>$order_id,
-					'code'=>'total',
-					'title'=>'商品价格',
-					'text'=>'￥0',
-					'value'=>'0.00',
-					'sort_order'=>0
-				],
-			);
-			foreach($order_total as $k=>$v){
-				Db::name('order_total')->insert($v);
-			}
-			
 			return json(['code'=> 10000,'msg'=>'定制成功','gid'=>$goods_id]);
 		}else{
 			return json(['code'=>100001,'msg'=>'定制失败']);

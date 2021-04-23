@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:37:"./oscshop/admin\view\index\index.html";i:1618966407;s:65:"D:\wamp64\www\project\oscshop\oscshop\admin\view\public\base.html";i:1618966407;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:37:"./oscshop/admin\view\index\index.html";i:1619159293;s:65:"D:\wamp64\www\project\oscshop\oscshop\admin\view\public\base.html";i:1618966407;}*/ ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -317,12 +317,13 @@
 							<td>状态</td>
 							<td>生成日期</td>
 							<td>金额</td>
+							<td>是否定制</td>
 							<td>操作</td>
 							</tr>
 							</thead>
 							<tbody>								
 								<?php if(is_array($order_list) || $order_list instanceof \think\Collection || $order_list instanceof \think\Paginator): $i = 0; $__LIST__ = $order_list;if( count($__LIST__)==0 ) : echo "$empty" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?>
-								<tr>
+								<tr <?php if(($v['is_customized'] == 1)): ?> style="color:red;" <?php endif; ?>>
 									<td>
 										<?php echo $v['order_num_alias']; ?>
 									</td>
@@ -347,6 +348,13 @@
 										<?php if($v['points_order'] == 1): ?>
 											积分 <?php echo $v['pay_points']; else: ?>
 											&yen; <?php echo $v['total']; endif; ?>										
+									</td>
+									<td>
+										<?php if(($v['is_customized'] == 1)): ?>
+											是
+										<?php else: ?>
+											否
+										<?php endif; ?>
 									</td>
 									<td>
 										<a  class="btn btn-info" href='<?php echo url("member/OrderBackend/show_order",array("id"=>$v["order_id"])); ?>'>

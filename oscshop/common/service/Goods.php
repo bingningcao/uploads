@@ -246,7 +246,8 @@ class Goods{
 		
 		if (!$home_goods_list= cache('home_goods_list')) {
 		
-			$home_goods_list=Db::name('goods')->where('status',1)->order('goods_id desc')->limit(20)->select();
+			// $home_goods_list=Db::name('goods')->where('status',1)->order('goods_id desc')->limit(20)->select(); 小冰
+			$home_goods_list=Db::name('goods')->where('status',1)->where('customized_userid',0)->order('goods_id desc')->limit(20)->select();
 		
 			cache('home_goods_list', $home_goods_list);
 			

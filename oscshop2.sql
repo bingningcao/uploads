@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2021-04-22 10:58:08
+Date: 2021-04-23 15:54:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,11 +30,12 @@ CREATE TABLE `osc_address` (
   `province_id` int(11) DEFAULT '0' COMMENT '省',
   PRIMARY KEY (`address_id`),
   KEY `customer_id` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户收货地址';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户收货地址';
 
 -- ----------------------------
 -- Records of osc_address
 -- ----------------------------
+INSERT INTO `osc_address` VALUES ('1', '1', '小冰', '13823838438', '无', '275', '2920', '18');
 
 -- ----------------------------
 -- Table structure for osc_admin
@@ -61,7 +62,7 @@ CREATE TABLE `osc_admin` (
 -- ----------------------------
 -- Records of osc_admin
 -- ----------------------------
-INSERT INTO `osc_admin` VALUES ('1', 'admin', 'MDAwMDAwMDAwMLO6e6+AebiU', '', '', 'admin@admin.com', '3', '0.0.0.0', '', '1505270345', '0', '1618996721', '1', '0');
+INSERT INTO `osc_admin` VALUES ('1', 'admin', 'MDAwMDAwMDAwMLO6e6+AebiU', '', '', 'admin@admin.com', '4', '0.0.0.0', '', '1505270345', '0', '1619143712', '1', '0');
 
 -- ----------------------------
 -- Table structure for osc_agent
@@ -3786,13 +3787,11 @@ CREATE TABLE `osc_cart` (
   `create_time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cart_id`),
   KEY `cart_id` (`uid`,`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='购物车表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 -- ----------------------------
 -- Records of osc_cart
 -- ----------------------------
-INSERT INTO `osc_cart` VALUES ('3', 'money', '1', '1', '', '3', '1619052392');
-INSERT INTO `osc_cart` VALUES ('4', 'money', '1', '49', '', '1', '1619058807');
 
 -- ----------------------------
 -- Table structure for osc_category
@@ -3975,31 +3974,30 @@ CREATE TABLE `osc_goods` (
   `viewed` int(5) NOT NULL DEFAULT '0' COMMENT '点击量',
   `is_customized` int(11) DEFAULT '0' COMMENT '是否定制 0、不定制  1、定制',
   `customized_userid` int(11) DEFAULT NULL COMMENT '定制用户id',
+  `customized_params` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
 
 -- ----------------------------
 -- Records of osc_goods
 -- ----------------------------
-INSERT INTO `osc_goods` VALUES ('1', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', 'D2016031002', '件', '德化', '1000', '0', '0', 'images/osc1/1/1.jpg', '0', '0', '49.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '1', '1', '2016-08-17 22:55:16', '0000-00-00 00:00:00', '49', '0', '0');
-INSERT INTO `osc_goods` VALUES ('2', '艺创 青花甜白功夫茶具小品茗茶杯陶瓷茶盏瓷杯主人杯6个', 'D2016031001', '套', '德化', '900', '0', '0', 'images/osc1/2/2.jpg', '0', '0', '79.00', '50', '5000', '1', '0', '500.00000000', '2', '20.00000000', '20.00000000', '10.00000000', '1', '1', '1', '2', '1', '2016-08-17 23:10:22', '0000-00-00 00:00:00', '93', '0', '0');
-INSERT INTO `osc_goods` VALUES ('3', '艺创 青花甜白功夫茶具配件 公道杯茶海分茶器陶瓷', 'D20151107', '件', '德化', '300', '0', '0', 'images/osc1/3/2.jpg', '0', '0', '39.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '3', '1', '2016-08-19 20:22:43', '0000-00-00 00:00:00', '29', '0', '0');
-INSERT INTO `osc_goods` VALUES ('4', '艺创 青花甜白功夫茶具陶瓷配件 茶叶过滤网隔茶渣网', 'D20151107', '套', '德化', '500', '0', '0', 'images/osc1/4/1.jpg', '0', '0', '30.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '4', '1', '2016-08-19 20:37:55', '0000-00-00 00:00:00', '49', '0', '0');
-INSERT INTO `osc_goods` VALUES ('5', '旅行茶具套装便携式功夫茶具 车载 户外 手绘茶具', 'D20151107', '套', '德化', '486', '0', '0', 'images/osc1/5/1.jpg', '0', '1', '0.20', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '5', '1', '2016-08-19 20:57:05', '0000-00-00 00:00:00', '58', '0', '0');
-INSERT INTO `osc_goods` VALUES ('6', '艺创 品茗杯陶瓷功夫茶具 定窑白荷花大号茶个人主人杯', 'D20151107', '个', '德化', '500', '0', '0', 'images/osc1/6/1.jpg', '0', '1', '39.00', '50', '5000', '1', '0', '100.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '6', '1', '2016-08-19 21:12:02', '0000-00-00 00:00:00', '26', '0', '0');
-INSERT INTO `osc_goods` VALUES ('7', '艺创 个人杯 品茗杯 功夫茶具茶杯 手拉坯柴烧', 'D20151107', '个', '德化', '200', '0', '0', 'images/osc1/7/1.jpg', '0', '1', '30.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '7', '1', '2016-08-19 21:29:39', '0000-00-00 00:00:00', '0', '0', '0');
-INSERT INTO `osc_goods` VALUES ('8', '青瓷手绘荷花陶瓷茶叶罐 储物罐 瓷罐 收纳罐', 'D20151107', '个', '德化', '500', '0', '0', 'images/osc1/8/1.jpg', '0', '1', '58.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '8', '1', '2016-08-19 21:42:42', '0000-00-00 00:00:00', '7', '0', '0');
-INSERT INTO `osc_goods` VALUES ('9', '艺创 定窑白瓷手绘胭红整套功夫茶具陶瓷 盖碗 茶杯套组', 'D20151107', '套', '德化', '500', '0', '0', 'images/osc1/9/1.jpg', '0', '1', '198.00', '50', '3000', '1', '0', '2.00000000', '1', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '9', '1', '2016-08-19 22:00:25', '0000-00-00 00:00:00', '11', '0', '0');
-INSERT INTO `osc_goods` VALUES ('10', '艺创 定窑白瓷手绘山水整套功夫茶具 盖碗 茶杯套组', 'D20151107', '套', '德化', '1000', '0', '0', 'images/osc1/10/1.jpg', '0', '1', '158.00', '50', '5000', '1', '0', '2.00000000', '1', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '10', '1', '2016-08-19 22:08:17', '0000-00-00 00:00:00', '2', '0', '0');
-INSERT INTO `osc_goods` VALUES ('11', '艺创 手工制作粗陶柴烧整套功夫木柄茶具 陶瓷 侧把 壶承礼盒', 'D20151107', '套', '德化', '498', '0', '0', 'images/osc1/11/1.jpg', '0', '1', '450.00', '50', '5000', '1', '0', '2.00000000', '1', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '11', '1', '2016-08-19 22:15:27', '0000-00-00 00:00:00', '8', '0', '0');
-INSERT INTO `osc_goods` VALUES ('12', '艺创 青花白瓷手绘荷花整套功夫茶具陶瓷 盖碗 茶杯创意礼盒', 'D20151107', '套', '德化', '497', '0', '0', 'images/osc1/12/1.jpg', '0', '1', '168.00', '50', '5000', '1', '0', '2.00000000', '1', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '12', '1', '2016-08-19 22:24:54', '0000-00-00 00:00:00', '12', '0', '0');
-INSERT INTO `osc_goods` VALUES ('14', '艺创 青花甜白功夫茶具小品茗茶杯陶瓷茶盏瓷杯主人杯6个', 'D2016031001', '套', '德化', '900', '0', '0', 'images/osc1/2/2.jpg', '0', '0', '79.00', '50', '5000', '1', '0', '500.00000000', '2', '20.00000000', '20.00000000', '10.00000000', '1', '1', '1', '2', '1', '2016-08-17 23:10:22', '0000-00-00 00:00:00', '93', '0', '0');
-INSERT INTO `osc_goods` VALUES ('44', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', null, null, null, '0', '0', '0', 'images/osc1/customized/Vn7gZaxndkTrYMkC_20210421174650.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-21 17:46:50', null, '1', '1', '1');
-INSERT INTO `osc_goods` VALUES ('45', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, null, null, '0', '0', '0', 'images/osc1/customized/ynIy4rYHYaheJGXA_20210422091236.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-22 09:12:36', null, '0', '1', '1');
-INSERT INTO `osc_goods` VALUES ('46', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', null, null, null, '0', '0', '0', 'images/osc1/customized/iGacX6JUBpXN8Ue8_20210422091817.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-22 09:18:17', null, '1', '1', '1');
-INSERT INTO `osc_goods` VALUES ('47', 'xiaobing_定制的酒瓶 【 右旋转=>270度, 放大比例=> 1.1倍 】', null, null, null, '0', '0', '0', 'images/osc1/customized/Dz2Gys472SLpLDFq_20210422092006.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-22 09:20:06', null, '0', '1', '1');
-INSERT INTO `osc_goods` VALUES ('48', 'xiaobing_定制的酒瓶 【 右旋转=>0度, 放大比例=> 1倍 】', null, null, null, '0', '0', '0', 'images/osc1/customized/yMIxQPkZIa36aPmf_20210422100720.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-22 10:07:20', null, '11', '1', '1');
-INSERT INTO `osc_goods` VALUES ('49', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, null, null, '1', '0', '0', 'images/osc1/customized/LsNRKfsFrDxLjSyl_20210422103309.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '0', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-22 10:33:09', null, '13', '1', '1');
+INSERT INTO `osc_goods` VALUES ('1', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', 'D2016031002', '件', '德化', '1000', '0', '0', 'images/osc1/1/1.jpg', '0', '0', '49.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '1', '1', '2016-08-17 22:55:16', '0000-00-00 00:00:00', '49', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('2', '艺创 青花甜白功夫茶具小品茗茶杯陶瓷茶盏瓷杯主人杯6个', 'D2016031001', '套', '德化', '900', '0', '0', 'images/osc1/2/2.jpg', '0', '0', '79.00', '50', '5000', '1', '0', '500.00000000', '2', '20.00000000', '20.00000000', '10.00000000', '1', '1', '1', '2', '1', '2016-08-17 23:10:22', '0000-00-00 00:00:00', '94', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('3', '艺创 青花甜白功夫茶具配件 公道杯茶海分茶器陶瓷', 'D20151107', '件', '德化', '300', '0', '0', 'images/osc1/3/2.jpg', '0', '0', '39.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '3', '1', '2016-08-19 20:22:43', '0000-00-00 00:00:00', '29', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('4', '艺创 青花甜白功夫茶具陶瓷配件 茶叶过滤网隔茶渣网', 'D20151107', '套', '德化', '500', '0', '0', 'images/osc1/4/1.jpg', '0', '0', '30.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '4', '1', '2016-08-19 20:37:55', '0000-00-00 00:00:00', '49', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('5', '旅行茶具套装便携式功夫茶具 车载 户外 手绘茶具', 'D20151107', '套', '德化', '486', '0', '0', 'images/osc1/5/1.jpg', '0', '1', '0.20', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '5', '1', '2016-08-19 20:57:05', '0000-00-00 00:00:00', '58', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('6', '艺创 品茗杯陶瓷功夫茶具 定窑白荷花大号茶个人主人杯', 'D20151107', '个', '德化', '500', '0', '0', 'images/osc1/6/1.jpg', '0', '1', '39.00', '50', '5000', '1', '0', '100.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '6', '1', '2016-08-19 21:12:02', '0000-00-00 00:00:00', '26', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('7', '艺创 个人杯 品茗杯 功夫茶具茶杯 手拉坯柴烧', 'D20151107', '个', '德化', '200', '0', '0', 'images/osc1/7/1.jpg', '0', '1', '30.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '7', '1', '2016-08-19 21:29:39', '0000-00-00 00:00:00', '0', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('8', '青瓷手绘荷花陶瓷茶叶罐 储物罐 瓷罐 收纳罐', 'D20151107', '个', '德化', '500', '0', '0', 'images/osc1/8/1.jpg', '0', '1', '58.00', '50', '5000', '1', '0', '200.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '8', '1', '2016-08-19 21:42:42', '0000-00-00 00:00:00', '7', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('9', '艺创 定窑白瓷手绘胭红整套功夫茶具陶瓷 盖碗 茶杯套组', 'D20151107', '套', '德化', '500', '0', '0', 'images/osc1/9/1.jpg', '0', '1', '198.00', '50', '3000', '1', '0', '0.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '9', '1', '2016-08-19 22:00:25', '0000-00-00 00:00:00', '11', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('10', '艺创 定窑白瓷手绘山水整套功夫茶具 盖碗 茶杯套组', 'D20151107', '套', '德化', '1000', '0', '0', 'images/osc1/10/1.jpg', '0', '1', '158.00', '50', '5000', '1', '0', '0.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '10', '1', '2016-08-19 22:08:17', '0000-00-00 00:00:00', '2', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('11', '艺创 手工制作粗陶柴烧整套功夫木柄茶具 陶瓷 侧把 壶承礼盒', 'D20151107', '套', '德化', '498', '0', '0', 'images/osc1/11/1.jpg', '0', '1', '450.00', '50', '5000', '1', '0', '0.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '11', '1', '2016-08-19 22:15:27', '0000-00-00 00:00:00', '8', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('12', '艺创 青花白瓷手绘荷花整套功夫茶具陶瓷 盖碗 茶杯创意礼盒', 'D20151107', '套', '德化', '497', '0', '0', 'images/osc1/12/1.jpg', '0', '1', '168.00', '50', '5000', '1', '0', '0.00000000', '2', '20.00000000', '20.00000000', '20.00000000', '1', '1', '1', '12', '1', '2016-08-19 22:24:54', '0000-00-00 00:00:00', '12', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('14', '艺创 青花甜白功夫茶具小品茗茶杯陶瓷茶盏瓷杯主人杯6个', 'D2016031001', '套', '德化', '900', '0', '0', 'images/osc1/2/2.jpg', '0', '0', '79.00', '50', '5000', '1', '0', '0.00000000', '2', '20.00000000', '20.00000000', '2.00000000', '1', '1', '1', '2', '1', '2016-08-17 23:10:22', '0000-00-00 00:00:00', '93', '0', '0', null);
+INSERT INTO `osc_goods` VALUES ('53', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', null, null, null, '20', '0', '0', 'images/osc1/customized/IgbeJmGPEa7f8SFN_20210423101815.jpg', '0', '1', '100.00', '0', '0', '0', '0', '0.00000000', '2', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-23 10:18:15', null, '12', '1', '1', null);
+INSERT INTO `osc_goods` VALUES ('54', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, null, null, '20', '0', '0', 'images/osc1/customized/deWpnDFFP0OH8WOH_20210423103833.jpg', '0', '1', '20.00', '0', '0', '0', '0', '0.00000000', '2', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-23 10:38:33', null, '3', '1', '1', null);
+INSERT INTO `osc_goods` VALUES ('55', 'xiaobing_定制的酒瓶', null, null, null, '10', '0', '0', 'images/osc1/customized/kpGkecbkOkIExJFy_20210423141324.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '2', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-23 14:13:24', null, '0', '1', '1', 'a:2:{s:6:\"rotate\";s:2:\"90\";s:8:\"multiple\";s:3:\"1.1\";}');
+INSERT INTO `osc_goods` VALUES ('56', 'xiaobing_定制的酒瓶', null, null, null, '100', '0', '0', 'images/osc1/customized/dcFaYl0qNbyG1CEl_20210423141733.jpg', '0', '1', '0.00', '0', '0', '0', '0', '0.00000000', '2', '0.00000000', '0.00000000', '0.00000000', '0', '1', '1', '0', '1', '2021-04-23 14:17:33', null, '0', '1', '1', 'a:2:{s:6:\"rotate\";s:2:\"90\";s:8:\"multiple\";s:3:\"1.1\";}');
 
 -- ----------------------------
 -- Table structure for osc_goods_attribute
@@ -4044,7 +4042,7 @@ CREATE TABLE `osc_goods_description` (
   `meta_description` varchar(255) DEFAULT NULL,
   `meta_keyword` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`goods_description_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='产品信息描述表';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='产品信息描述表';
 
 -- ----------------------------
 -- Records of osc_goods_description
@@ -4061,12 +4059,10 @@ INSERT INTO `osc_goods_description` VALUES ('9', '9', '艺创 定窑白瓷手绘
 INSERT INTO `osc_goods_description` VALUES ('10', '10', '艺创 定窑白瓷手绘山水整套功夫茶具 盖碗 茶杯套组', '', '艺创 定窑白瓷手绘山水整套功夫茶具 盖碗 茶杯套组', '艺创 定窑白瓷手绘山水整套功夫茶具 盖碗 茶杯套组');
 INSERT INTO `osc_goods_description` VALUES ('11', '11', '艺创 手工制作粗陶柴烧整套功夫木柄茶具 陶瓷 侧把 壶承礼盒', '', '艺创 手工制作粗陶柴烧整套功夫木柄茶具 陶瓷 侧把 壶承礼盒', '艺创 手工制作粗陶柴烧整套功夫木柄茶具 陶瓷 侧把 壶承礼盒');
 INSERT INTO `osc_goods_description` VALUES ('12', '12', '艺创 青花白瓷手绘荷花整套功夫茶具陶瓷 盖碗 茶杯创意礼盒', '', '艺创 青花白瓷手绘荷花整套功夫茶具陶瓷 盖碗 茶杯创意礼盒', '艺创 青花白瓷手绘荷花整套功夫茶具陶瓷 盖碗 茶杯创意礼盒');
-INSERT INTO `osc_goods_description` VALUES ('28', '44', null, null, null, null);
-INSERT INTO `osc_goods_description` VALUES ('29', '45', null, null, null, null);
-INSERT INTO `osc_goods_description` VALUES ('30', '46', null, null, null, null);
-INSERT INTO `osc_goods_description` VALUES ('31', '47', null, null, null, null);
-INSERT INTO `osc_goods_description` VALUES ('32', '48', null, null, null, null);
-INSERT INTO `osc_goods_description` VALUES ('33', '49', null, null, null, null);
+INSERT INTO `osc_goods_description` VALUES ('37', '53', null, null, null, null);
+INSERT INTO `osc_goods_description` VALUES ('38', '54', null, null, null, null);
+INSERT INTO `osc_goods_description` VALUES ('39', '55', null, null, null, null);
+INSERT INTO `osc_goods_description` VALUES ('40', '56', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for osc_goods_discount
@@ -4360,6 +4356,13 @@ INSERT INTO `osc_goods_to_category` VALUES ('46', '1');
 INSERT INTO `osc_goods_to_category` VALUES ('47', '1');
 INSERT INTO `osc_goods_to_category` VALUES ('48', '1');
 INSERT INTO `osc_goods_to_category` VALUES ('49', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('50', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('51', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('52', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('53', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('54', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('55', '1');
+INSERT INTO `osc_goods_to_category` VALUES ('56', '1');
 
 -- ----------------------------
 -- Table structure for osc_length_class
@@ -4419,7 +4422,7 @@ CREATE TABLE `osc_member` (
 -- ----------------------------
 -- Records of osc_member
 -- ----------------------------
-INSERT INTO `osc_member` VALUES ('1', 'mobile', null, 'xiaobing', 'MDAwMDAwMDAwMLO6e6+AebiU', '1', '0', 'xiaobing', '0', null, '0', '0', '0', '0.000', '0', '0', '0', '1618967309', '1618997317', null, '0.0.0.0', '1', null, null, '2', '0', '0', '0');
+INSERT INTO `osc_member` VALUES ('1', 'mobile', null, 'xiaobing', 'MDAwMDAwMDAwMLO6e6+AebiU', '1', '1', 'xiaobing', '0', null, '0', '0', '0', '0.000', '0', '0', '1', '1618967309', '1619074489', null, '0.0.0.0', '3', null, null, '2', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for osc_member_auth_group
@@ -4532,6 +4535,7 @@ CREATE TABLE `osc_member_wishlist` (
 -- ----------------------------
 -- Records of osc_member_wishlist
 -- ----------------------------
+INSERT INTO `osc_member_wishlist` VALUES ('1', '51', '2021-04-22 11:57:23');
 
 -- ----------------------------
 -- Table structure for osc_menu
@@ -4797,19 +4801,16 @@ CREATE TABLE `osc_order` (
   `date_added` int(11) NOT NULL DEFAULT '0',
   `date_modified` int(11) NOT NULL DEFAULT '0',
   `pay_time` int(11) NOT NULL DEFAULT '0' COMMENT '付款时间',
+  `is_customized` int(11) DEFAULT NULL COMMENT '是否定制 1定制 ',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of osc_order
 -- ----------------------------
-INSERT INTO `osc_order` VALUES ('1', '2021042151991029', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', '1', '50', '0', '0', 'xiaobing', null, null, '', '0', '', '0', '0', '0', '', 'alipay', '', '49.00', '3', '0.0.0.0', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', '1618998643', '0', '0');
-INSERT INTO `osc_order` VALUES ('2', '2021042152559710', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', '1', '50', '0', '0', 'xiaobing', null, null, '', '0', '', '0', '0', '0', '', 'alipay', '', '49.00', '3', '0.0.0.0', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', '1618998660', '0', '0');
-INSERT INTO `osc_order` VALUES ('3', '2021042252509848', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619053956', '0', '0');
-INSERT INTO `osc_order` VALUES ('4', '2021042257101102', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619054297', '0', '0');
-INSERT INTO `osc_order` VALUES ('5', '2021042254535056', 'xiaobing_定制的酒瓶 【 右旋转=>270度, 放大比例=> 1.1倍 】', '1', '50', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619054406', '0', '0');
-INSERT INTO `osc_order` VALUES ('6', '2021042256102495', 'xiaobing_定制的酒瓶 【 右旋转=>0度, 放大比例=> 1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619057240', '0', '0');
-INSERT INTO `osc_order` VALUES ('7', '2021042253541004', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619058789', '0', '0');
+INSERT INTO `osc_order` VALUES ('14', '2021042357525154', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '400.00', '3', null, null, '1619145513', '0', '0', '1');
+INSERT INTO `osc_order` VALUES ('15', '2021042352525310', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619158404', '0', '0', '1');
+INSERT INTO `osc_order` VALUES ('16', '2021042310148102', 'xiaobing_定制的酒瓶', '1', '0', '0', '0', 'xiaobing', null, null, null, '0', null, '0', '0', '0', null, null, null, '0.00', '3', null, null, '1619158654', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for osc_order_goods
@@ -4826,18 +4827,14 @@ CREATE TABLE `osc_order_goods` (
   `total` decimal(15,2) NOT NULL DEFAULT '0.00',
   `reward` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of osc_order_goods
 -- ----------------------------
-INSERT INTO `osc_order_goods` VALUES ('1', '1', '1', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', 'D2016031002', '1', '49.00', '49.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('2', '2', '1', '艺创 青花甜白三才大盖碗功夫茶具敬茶陶瓷泡茶器', 'D2016031002', '1', '49.00', '49.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('3', '3', '45', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, '1', '0.00', '0.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('4', '4', '46', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', null, '1', '0.00', '0.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('5', '5', '47', 'xiaobing_定制的酒瓶 【 右旋转=>270度, 放大比例=> 1.1倍 】', null, '2', '0.00', '0.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('6', '6', '48', 'xiaobing_定制的酒瓶 【 右旋转=>0度, 放大比例=> 1倍 】', null, '1', '0.00', '0.00', '0');
-INSERT INTO `osc_order_goods` VALUES ('7', '7', '49', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, '1', '0.00', '0.00', '0');
+INSERT INTO `osc_order_goods` VALUES ('14', '14', '54', 'xiaobing_定制的酒瓶 【 右旋转=>180度, 放大比例=> 1.1倍 】', null, '20', '20.00', '400.00', '0');
+INSERT INTO `osc_order_goods` VALUES ('15', '15', '55', 'xiaobing_定制的酒瓶 【 右旋转=>90度, 放大比例=> 1.1倍 】', null, '10', '0.00', '0.00', '0');
+INSERT INTO `osc_order_goods` VALUES ('16', '16', '56', 'xiaobing_定制的酒瓶', null, '100', '0.00', '0.00', '0');
 
 -- ----------------------------
 -- Table structure for osc_order_history
@@ -4851,18 +4848,14 @@ CREATE TABLE `osc_order_history` (
   `comment` text,
   `date_added` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_history_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of osc_order_history
 -- ----------------------------
-INSERT INTO `osc_order_history` VALUES ('1', '1', '3', '0', '', '1618998644');
-INSERT INTO `osc_order_history` VALUES ('2', '2', '3', '0', '', '1618998660');
-INSERT INTO `osc_order_history` VALUES ('3', '3', '3', '0', null, '1619053956');
-INSERT INTO `osc_order_history` VALUES ('4', '4', '3', '0', null, '1619054298');
-INSERT INTO `osc_order_history` VALUES ('5', '5', '3', '0', null, '1619054406');
-INSERT INTO `osc_order_history` VALUES ('6', '6', '3', '0', null, '1619057241');
-INSERT INTO `osc_order_history` VALUES ('7', '7', '3', '0', null, '1619058789');
+INSERT INTO `osc_order_history` VALUES ('15', '14', '3', '0', '制定加制定', '1619145513');
+INSERT INTO `osc_order_history` VALUES ('16', '15', '3', '0', '定制2', '1619158404');
+INSERT INTO `osc_order_history` VALUES ('17', '16', '3', '0', '定制100', '1619158654');
 
 -- ----------------------------
 -- Table structure for osc_order_option
@@ -4917,26 +4910,20 @@ CREATE TABLE `osc_order_total` (
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`order_total_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of osc_order_total
 -- ----------------------------
-INSERT INTO `osc_order_total` VALUES ('1', '1', 'sub_total', '商品价格', '￥49', '49.00', '0');
-INSERT INTO `osc_order_total` VALUES ('2', '1', 'shipping', '运费', '￥', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('3', '1', 'total', '总价', '￥49', '49.00', '0');
-INSERT INTO `osc_order_total` VALUES ('4', '2', 'sub_total', '商品价格', '￥49', '49.00', '0');
-INSERT INTO `osc_order_total` VALUES ('5', '2', 'shipping', '运费', '￥', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('6', '2', 'total', '总价', '￥49', '49.00', '0');
-INSERT INTO `osc_order_total` VALUES ('7', '5', 'sub_total', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('8', '5', 'shipping', '运费', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('9', '5', 'total', '总价', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('10', '6', 'sub_total', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('11', '6', 'shipping', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('12', '6', 'total', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('13', '7', 'sub_total', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('14', '7', 'shipping', '商品价格', '￥0', '0.00', '0');
-INSERT INTO `osc_order_total` VALUES ('15', '7', 'total', '商品价格', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('70', '14', 'sub_total', '商品价格', '￥400', '400.00', '0');
+INSERT INTO `osc_order_total` VALUES ('71', '14', 'shipping', '运费', '￥0.00', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('72', '14', 'total', '总价', '￥400', '400.00', '0');
+INSERT INTO `osc_order_total` VALUES ('73', '15', 'sub_total', '商品价格', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('74', '15', 'shipping', '运费', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('75', '15', 'total', '总价	', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('76', '16', 'sub_total', '商品价格', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('77', '16', 'shipping', '运费', '￥0', '0.00', '0');
+INSERT INTO `osc_order_total` VALUES ('78', '16', 'total', '总价	', '￥0', '0.00', '0');
 
 -- ----------------------------
 -- Table structure for osc_points
@@ -5030,7 +5017,7 @@ CREATE TABLE `osc_user_action` (
   `info` varchar(255) DEFAULT NULL COMMENT '行为描述',
   `add_time` int(10) NOT NULL DEFAULT '0' COMMENT '加入时间',
   PRIMARY KEY (`ua_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='用户行为';
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COMMENT='用户行为';
 
 -- ----------------------------
 -- Records of osc_user_action
@@ -5086,6 +5073,44 @@ INSERT INTO `osc_user_action` VALUES ('48', '1', 'xiaobing', '网站会员', '�
 INSERT INTO `osc_user_action` VALUES ('49', '1', 'admin', '后台系统用户', '清除了缓存', '1619054445');
 INSERT INTO `osc_user_action` VALUES ('50', '1', 'admin', '后台系统用户', '清除了缓存', '1619058070');
 INSERT INTO `osc_user_action` VALUES ('51', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619058807');
+INSERT INTO `osc_user_action` VALUES ('52', '1', 'admin', '后台系统用户', '更新了订单', '1619062632');
+INSERT INTO `osc_user_action` VALUES ('53', '1', 'admin', '后台系统用户', '更新了订单', '1619062646');
+INSERT INTO `osc_user_action` VALUES ('54', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063034');
+INSERT INTO `osc_user_action` VALUES ('55', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063042');
+INSERT INTO `osc_user_action` VALUES ('56', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063046');
+INSERT INTO `osc_user_action` VALUES ('57', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063050');
+INSERT INTO `osc_user_action` VALUES ('58', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063326');
+INSERT INTO `osc_user_action` VALUES ('59', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063588');
+INSERT INTO `osc_user_action` VALUES ('60', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063703');
+INSERT INTO `osc_user_action` VALUES ('61', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619063947');
+INSERT INTO `osc_user_action` VALUES ('62', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619071828');
+INSERT INTO `osc_user_action` VALUES ('63', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619071955');
+INSERT INTO `osc_user_action` VALUES ('64', '1', 'admin', '后台系统用户', '更新了订单', '1619072459');
+INSERT INTO `osc_user_action` VALUES ('65', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619072535');
+INSERT INTO `osc_user_action` VALUES ('66', '1', 'xiaobing', '网站会员', '登录了网站', '1619074472');
+INSERT INTO `osc_user_action` VALUES ('67', '1', 'xiaobing', '网站会员', '登录了网站', '1619074489');
+INSERT INTO `osc_user_action` VALUES ('68', '1', 'admin', '后台系统用户', '登录了后台系统', '1619143713');
+INSERT INTO `osc_user_action` VALUES ('69', '1', 'admin', '后台系统用户', '更新了订单', '1619144378');
+INSERT INTO `osc_user_action` VALUES ('70', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144592');
+INSERT INTO `osc_user_action` VALUES ('71', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144604');
+INSERT INTO `osc_user_action` VALUES ('72', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144630');
+INSERT INTO `osc_user_action` VALUES ('73', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144642');
+INSERT INTO `osc_user_action` VALUES ('74', '1', 'xiaobing', '网站会员', '删除了购物车商品', '1619144657');
+INSERT INTO `osc_user_action` VALUES ('75', '1', 'xiaobing', '网站会员', '删除了购物车商品', '1619144658');
+INSERT INTO `osc_user_action` VALUES ('76', '1', 'xiaobing', '网站会员', '删除了购物车商品', '1619144659');
+INSERT INTO `osc_user_action` VALUES ('77', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144666');
+INSERT INTO `osc_user_action` VALUES ('78', '1', 'xiaobing', '网站会员', '更新了收货地址', '1619144711');
+INSERT INTO `osc_user_action` VALUES ('79', '1', 'xiaobing', '网站会员', '加入商品到购物车', '1619144776');
+INSERT INTO `osc_user_action` VALUES ('80', '1', 'admin', '后台系统用户', '清除了缓存', '1619145058');
+INSERT INTO `osc_user_action` VALUES ('81', '1', 'admin', '后台系统用户', '清除了缓存', '1619145374');
+INSERT INTO `osc_user_action` VALUES ('82', '1', 'admin', '后台系统用户', '更新了订单', '1619146448');
+INSERT INTO `osc_user_action` VALUES ('83', '1', 'admin', '后台系统用户', '更新了订单', '1619146464');
+INSERT INTO `osc_user_action` VALUES ('84', '1', 'admin', '后台系统用户', '更新了订单', '1619148467');
+INSERT INTO `osc_user_action` VALUES ('85', '1', 'admin', '后台系统用户', '更新了订单', '1619148579');
+INSERT INTO `osc_user_action` VALUES ('86', '1', 'admin', '后台系统用户', '更新了订单', '1619148599');
+INSERT INTO `osc_user_action` VALUES ('87', '1', 'admin', '后台系统用户', '更新了订单', '1619148710');
+INSERT INTO `osc_user_action` VALUES ('88', '1', 'admin', '后台系统用户', '更新了订单', '1619148731');
+INSERT INTO `osc_user_action` VALUES ('89', '1', 'admin', '后台系统用户', '更新了订单', '1619149225');
 
 -- ----------------------------
 -- Table structure for osc_wechat_news_reply

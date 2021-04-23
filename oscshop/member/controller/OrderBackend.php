@@ -103,6 +103,15 @@ class OrderBackend extends AdminBase{
 	function update_order(){
 		$data=input('post.');		
 		$type=input('param.type');
+
+		//小冰
+			$activeOrder = Db::name('order')
+						->alias('o')
+						->join('order_goods od','od.order_id = o.order_id')
+						->where('o.order_id',$data['order_id'])->find();
+			$is_customized = $activeOrder['is_customized']; //查出是否制定
+			$goods_id = $activeOrder['goods_id'];
+		//小冰
 		
 		//更新 order_goods
 		$og=Db::name('order_goods')->find($data['order_goods_id']);
@@ -132,6 +141,12 @@ class OrderBackend extends AdminBase{
 			}
 			
 			Db::name('order')->where(array('order_id'=>$data['order_id']))->update(array('total'=>$total+$data['shipping']));
+			// 小冰
+				if($is_customized == 1){
+					Db::name('goods')->where(array('goods_id'=>$goods_id))->update(array('price'=>$data['price']));
+					//price
+				}
+			//小冰
 			
 			//更新 order_total
 			Db::name('order_total')->where(array('order_id'=>$data['order_id']))->delete();

@@ -158,7 +158,22 @@
 	            <?php foreach ($data['order_product'] as $product) { ?>
 	            <tr>
 	              <td class="left">
-	              	<a><?php echo $product['name']; ?></a>
+	              		<?php $customized_params = $product['customized_params'];?>
+              			<?php $customized_params = unserialize($customized_params); ?>
+              			<?php $rotate = $customized_params['rotate']; ?>
+              			<?php $rotate = $customized_params['rotate']; ?>
+	              	<div>
+	              		<div style="float: left; margin-right: 10px;">
+	              			<p style=""><img src="http://<?php echo $_SERVER['HTTP_HOST'] . '/public/uploads/' . $product['image']?>" style="width: 100px;" /></p>
+	              		</div>
+	              		<div style="float: left;">
+	              			<p><a><?php echo $product['name']; ?></a></p>
+	              			<p>旋转角度：向右旋转<?php echo $customized_params['rotate'];?>度</p>
+	              			<p>缩放大比例:<?php echo $customized_params['multiple']; ?></p>
+	              		</div>
+	              	</div>
+	              	
+
 	              	<?php if($option_list=Db::query('select * from '.config('database.prefix').'order_option where order_goods_id='.$product['order_goods_id'].' and order_id='.$product['order_id'])){ ?>
 					<?php foreach ($option_list as $option) { ?>
 	                <br />

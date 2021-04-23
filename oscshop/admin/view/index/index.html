@@ -114,12 +114,13 @@
 							<td>状态</td>
 							<td>生成日期</td>
 							<td>金额</td>
+							<td>是否定制</td>
 							<td>操作</td>
 							</tr>
 							</thead>
 							<tbody>								
 								{volist name="order_list" id="v" empty="$empty"}
-								<tr>
+								<tr {if($v['is_customized'] == 1)} style="color:red;" {/if}>
 									<td>
 										{$v.order_num_alias}
 									</td>
@@ -148,6 +149,13 @@
 										{else/}
 											&yen; {$v.total}
 										{/if}										
+									</td>
+									<td>
+										{if($v['is_customized'] == 1)}
+											是
+										{else/}
+											否
+										{/if}
 									</td>
 									<td>
 										<a  class="btn btn-info" href='{:url("member/OrderBackend/show_order",array("id"=>$v["order_id"]))}'>

@@ -96,7 +96,7 @@ class Order{
 			'order'=>$order,
 			'order_product'=>Db::name('order_goods')->alias('og')
 			->join('__GOODS__ g','og.goods_id = g.goods_id','left')
-			->field('og.*,g.image')->where('og.order_id',$order_id)->select(),			
+			->field('og.*,g.image,g.customized_params')->where('og.order_id',$order_id)->select(),			
 			'order_total'=>Db::name('order_total')->where('order_id',$order_id)->select(),
 			'order_statuses'=>Db::name('OrderStatus')->select(),
 			'order_history'=>Db::name('order_history')->where('order_id',$order_id)->select()

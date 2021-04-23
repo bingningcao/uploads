@@ -56,7 +56,7 @@ class Order extends MobileBase
 		
 		$orders= Db::view('Order','order_id,order_num_alias,uid,total,comment,order_status_id,points_order,pay_points')
 		->view('OrderGoods','goods_id,name,order_goods_id,quantity,price','OrderGoods.order_id=Order.order_id')
-		->view('Goods','image','Goods.goods_id=OrderGoods.goods_id')				
+		->view('Goods','image,customized_params','Goods.goods_id=OrderGoods.goods_id')				
 		->where($where)->order('Order.order_id desc')->limit($limit)->select();
 		
 		$orders_list=null;
@@ -64,6 +64,11 @@ class Order extends MobileBase
 		if(isset($orders)&&is_array($orders)){
 			
 			foreach ($orders as $k => $v) {
+				$customized_params = $v['customized_params'];
+				$customized_params = unserialize($customized_params);
+				$rotate = $customized_params['rotate']; //旋转度数
+				$multiple = $customized_params['multiple']; //放大比例
+				$v['name'] = $v['name'] . '【右旋转:' . $rotate .'度 '. '放大:' . $multiple . '倍】';
 				$orders_list[$v['order_id']]['order']=$v;
 				$orders_list[$v['order_id']]['list'][]=$v;				
 			}
