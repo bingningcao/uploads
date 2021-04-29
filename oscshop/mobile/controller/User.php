@@ -179,6 +179,9 @@ class User extends MobileBase
 
 
 	function preview(){
+		$uid = UID; //用户id
+		$address = Db::name('address')->where('uid',$uid)->select();
+		$this->assign('address',$address);
 		// $params = input('get.');
 		// $strsrc = $params['strsrc'];
 		// $scale = $params['scale'];
@@ -203,6 +206,7 @@ class User extends MobileBase
 		$imgPath = $imgPath['path']; //图片路径
 		$num = $post['num']; //订单数量
 		$msg = $post['msg']; //订单留言
+		$address = $post['address'];
 
 		$uid = UID; //用户id
 		$username = $getUserInfo['username']; //用户名
@@ -222,7 +226,7 @@ class User extends MobileBase
 			'status'					=>				1,//状态
 			'quantity'					=>				$num,//数量
 			'weight_class_id'			=>				2,//默认单位（克）
-			'customized_params'			=>				$customized_params
+			'customized_params'			=>				$customized_params,
 		);
 		$goods_id = Db::name('goods')->insertGetId($data);
 
@@ -239,6 +243,7 @@ class User extends MobileBase
 				$order['order_status_id'] = 3;
 				$order['date_added'] = time();
 				$order['is_customized'] = 1; //是否定制
+				$order['address_id'] = $address;////收货地址
 				$order_id = Db::name('order')->insertGetId($order);
 			//订单表
 

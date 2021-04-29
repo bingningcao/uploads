@@ -68,11 +68,23 @@
 			<div class="myForm">
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
-						<label for="num" class="col-sm-2 col-xs-3 control-label" style="line-height: 34px;">数量</label>
-						<div class="col-sm-10 col-xs-9">
+						<div class="col-sm-12 col-xs-12">
 							<input type="number" class="form-control" id="num" placeholder="请输入数量">
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12 col-xs-12">
+							<select class="form-control" id="address" name="address">
+								<option value="0">请选择收货地址</option>
+								<?php foreach($address as $k=>$v):?>
+									<option value="<?php echo $v['address_id']?>"><?php echo $v['address']?> <?php echo $v['telephone']?></option>
+								<?php endforeach;?>
+							</select>
+						</div>
+					</div>
+				
+
 					<div class="form-group">
 						<label for="name" class="col-sm-2 col-xs-3">留言</label>
 						<textarea class="form-control" rows="3" id="msg"></textarea>
@@ -99,7 +111,9 @@
 			$('#submit').click(function(){
 				var num = $('#num').val();
 				var msg = $('#msg').val();
+				var address = $('#address').val();
 
+				
 				if(num == ''){
 					layer.open({//表单为空时阻止表单提交
 						content: '请输入订制数量',
@@ -116,6 +130,14 @@
 					});
 					return false;
 				}
+				if(address == "0"){
+					layer.open({//表单为空时阻止表单提交
+						content: '请输入订制数量',
+						btn: '我知道了',
+						shadeClose: false,
+					});
+					return false;
+				}
 
 
 				var formData = new FormData();
@@ -124,6 +146,7 @@
 				formData.append('rotate',rotate);
 				formData.append('num',num);
 				formData.append('msg',msg);
+				formData.append('address',address);
 
 				$.ajax({
 					type: "POST",

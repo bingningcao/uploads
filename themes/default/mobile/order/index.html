@@ -1,5 +1,7 @@
 {extend name="public:base" /}
 {block name="head"}
+
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
 <link href="__PUBLIC__/view_res/mobile/css/uc.css" type="text/css" rel="Stylesheet"/>
 <link href="__PUBLIC__/jquery-weui/dist/lib/weui.min.css" type="text/css" rel="Stylesheet" />
 <link href="__PUBLIC__/jquery-weui/dist/css/jquery-weui.min.css" type="text/css" rel="Stylesheet" />
@@ -95,7 +97,30 @@ function loadOrderList(page) {
                 orderLoadingLock = true;
             }
             $('#list-loading').hide();
-        
+
+            var wepay_button = $('.wepay_button');
+            var bol = null;
+            wepay_button.each(function(i){
+                if(wepay_button.eq(i).text() == '立即支付'){
+                    bol = true;
+                }
+            })
+            if(bol){
+                layer.alert('有未支付的订单', {
+                    time: 3*1000
+                    ,success: function(layero, index){
+                    var timeNum = this.time/1000, setText = function(start){
+                        layer.title((start ? timeNum : --timeNum) + ' 秒后关闭', index);
+                    };
+                    setText(!0);
+                    this.timer = setInterval(setText, 1000);
+                    if(timeNum <= 0) clearInterval(this.timer);
+                    }
+                  ,end: function(){
+                    clearInterval(this.timer);
+                  }
+                });
+            }
         });
     }
 }
@@ -128,7 +153,8 @@ function alipayOrder(orderId){
                		$.toast(d.error,"forbidden");
                		return;
                }else if(d.success){
-               		location=d.url;
+               		//location=d.url;
+                    location='/mobile/order/order_info/order_id/' + orderId
                }
             });
         }

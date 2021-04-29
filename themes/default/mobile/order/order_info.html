@@ -20,7 +20,8 @@
             <span class="od-tel">{$order.order.shipping_tel}</span>
         </div>
         <div class="od-address">
-        	<?php echo get_area_name($order['order']['city_id']).','.get_area_name($order['order']['country_id']).','.$order['order']['address']; ?>
+        	<p style="margin-bottom: 5px; margin-top: 0px;">地址：<?php echo get_area_name($order['order']['city_id']).','.get_area_name($order['order']['country_id']).','.$order['order']['address']; ?></p>
+            <p style="margin-bottom: 5px; margin-top: 0px;">电话：<?php echo $order['order']['telephone'] ?></p>
 		</div>
     </div>
     <div style="height:15px;background:url(__RES__/mobile/images/icon/od-exp-bh.png) left bottom repeat-x #fff;"></div>
