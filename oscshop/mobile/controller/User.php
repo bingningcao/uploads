@@ -204,6 +204,9 @@ class User extends MobileBase
 		$multiple = $post['multiple']; //放大比例
 		$rotate = $post['rotate']; //旋转度数
 		$imgPath = $imgPath['path']; //图片路径
+		$contrast = $post['contrast']; //对比度
+		$brightness = $post['brightness']; //明亮度
+
 		$num = $post['num']; //订单数量
 		$msg = $post['msg']; //订单留言
 		$address = $post['address'];
@@ -212,8 +215,10 @@ class User extends MobileBase
 		$username = $getUserInfo['username']; //用户名
 
 		$customized_params = array(
-			'rotate'	=>	$rotate, //旋转多少度
-			'multiple'	=>	$multiple, //放大缩小的倍数
+			'rotate'		=>	$rotate, //旋转多少度
+			'multiple'		=>	$multiple, //放大缩小的倍数
+			'contrast'		=>	$contrast, //对比度
+			'brightness'	=>	$brightness,//明亮度
 		);
 		$customized_params = serialize($customized_params);
 

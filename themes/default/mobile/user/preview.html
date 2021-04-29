@@ -73,27 +73,52 @@
 
 			<div class="myForm">
 				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<div class="col-sm-12 col-xs-12">
-							<input type="number" class="form-control" id="num" placeholder="请输入数量">
+					<!-- 对比度 -->
+						<div class="form-group">
+							<label for="contrast" class="form-label col-sm-4 col-xs-4">对比度</label>
+							<div class="col-sm-8 col-xs-8">
+								<input id='contrast' name="contrast" type='range' min='0' max='200' step='0' value='100' onchange="contrastEvent()" />
+							</div>
 						</div>
-					</div>
+					<!-- /对比度 -->
 
-					<div class="form-group">
-						<div class="col-sm-12 col-xs-12">
-							<select class="form-control" id="address" name="address">
-								<option value="0">请选择收货地址</option>
-								<?php foreach($address as $k=>$v):?>
-									<option value="<?php echo $v['address_id']?>"><?php echo $v['address']?> <?php echo $v['telephone']?></option>
-								<?php endforeach;?>
-							</select>
+					<!-- 明亮度 -->
+						<div class="form-group">
+							<label for="brightness" class="form-label col-sm-4 col-xs-4">明亮度</label>
+							<div class="col-sm-8 col-xs-8">
+								<input id='brightness' name="brightness" type='range' min='0' max='200' step='0' value='100' onchange="brightnessEvent()" />
+							</div>
 						</div>
-					</div>
+					<!-- /明亮度 -->
+
+
+					
+					<!-- 数量 -->
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								<input type="number" class="form-control" id="num" placeholder="请输入数量">
+							</div>
+						</div>
+					<!-- /数量 -->
+
+					<!-- 收货地址 -->
+						<div class="form-group">
+							<div class="col-sm-12 col-xs-12">
+								<select class="form-control" id="address" name="address">
+									<option value="0">请选择收货地址</option>
+									<?php foreach($address as $k=>$v):?>
+										<option value="<?php echo $v['address_id']?>"><?php echo $v['address']?> <?php echo $v['telephone']?></option>
+									<?php endforeach;?>
+								</select>
+							</div>
+						</div>
+					<!-- /收货地址 -->
 				
-
-					<div class="form-group">
-						<textarea class="form-control" rows="3" id="msg" placeholder="请输入留言信息"></textarea>
-					</div>
+					<!-- 留言信息 -->
+						<div class="form-group">
+							<textarea class="form-control" rows="3" id="msg" placeholder="请输入留言信息"></textarea>
+						</div>
+					<!-- /留言信息 -->
 					<button type="button" id="submit" class="btn btn-default">提交</button>
 				</form>
 			</div>
@@ -114,32 +139,35 @@
 			var litpic = dataURLtoFile(base64,fileName); //base64转file对象
 
 			$('#submit').click(function(){
+				var contrast = $('#contrast').val(); //对比度
+				var brightness = $('#brightness').val(); //明亮度
+
 				var num = $('#num').val();
 				var msg = $('#msg').val();
 				var address = $('#address').val();
 
 				
 				if(num == ''){
-					layer.open({//表单为空时阻止表单提交
-						content: '请输入订制数量',
-						btn: '我知道了',
-						shadeClose: false,
+					layer.confirm('请输入订制数量', {
+						btn: ['知道了'] //按钮
+					}, function(){
+						layer.msg('我这就去', {icon: 1});
 					});
 					return false;
 				}
 				if(msg == ''){
-					layer.open({//表单为空时阻止表单提交
-						content: '请输入留言信息，以便我们能及时联到您',
-						btn: '我知道了',
-						shadeClose: false,
+					layer.confirm('请填写留言信息，以便我们能联系到您', {
+						btn: ['知道了'] //按钮
+					}, function(){
+						layer.msg('我这就去', {icon: 1});
 					});
 					return false;
 				}
 				if(address == "0"){
-					layer.open({//表单为空时阻止表单提交
-						content: '请输入订制数量',
-						btn: '我知道了',
-						shadeClose: false,
+					layer.confirm('请选择收货地址', {
+						btn: ['知道了'] //按钮
+					}, function(){
+						layer.msg('我这就去', {icon: 1});
 					});
 					return false;
 				}
@@ -152,6 +180,9 @@
 				formData.append('num',num);
 				formData.append('msg',msg);
 				formData.append('address',address);
+
+				formData.append('contrast',contrast); //对比度
+				formData.append('brightness',brightness); //明亮度
 
 				$.ajax({
 					type: "POST",
@@ -196,6 +227,29 @@
 				//return new Blob([u8arr],{type:mime});
 			}
 		})
+
+
+		// 对比度调节
+			function contrastEvent(){ //对比度实时监听
+				var val = $('#contrast').val();
+				console.log(val);
+				$('#img').css({
+					filter:'contrast(' + val + '%)',
+				})
+			}
+		// 对比度调节
+		
+		// 明亮度调节
+			function brightnessEvent(){ //对比度实时监听
+				var val = $('#brightness').val();
+				console.log(val);
+				$('#img').css({
+					filter:'brightness(' + val + '%)',
+				})
+			}
+		// 明亮度调节
+
+		
 	</script>
 </body>
 </html>
