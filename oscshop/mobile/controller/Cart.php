@@ -18,7 +18,18 @@ use \think\Db;
 class Cart extends MobileBase{
 
 	function index(){
-		
+		$xb_inputs = input('get.is_customized');
+		if($xb_inputs){
+			$order = session('order');
+			$this->assign('order',$order);
+
+			$order_goods = session('order_goods');
+			$this->assign('order_goods',$order_goods);
+			$history = session('history'); //订单历史
+			$this->assign('history',$history);
+			$order_total = session('order_total'); //价格表
+			$this->assign('order_total',$order_total);
+		}
 		$uid=null;
 				
 		$uid=osc_service('mobile','user')->is_login();	

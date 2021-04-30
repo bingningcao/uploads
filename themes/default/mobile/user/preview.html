@@ -102,7 +102,7 @@
 					<!-- /数量 -->
 
 					<!-- 收货地址 -->
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<div class="col-sm-12 col-xs-12">
 								<select class="form-control" id="address" name="address">
 									<option value="0">请选择收货地址</option>
@@ -111,7 +111,7 @@
 									<?php endforeach;?>
 								</select>
 							</div>
-						</div>
+						</div> -->
 					<!-- /收货地址 -->
 				
 					<!-- 留言信息 -->
@@ -163,14 +163,14 @@
 					});
 					return false;
 				}
-				if(address == "0"){
-					layer.confirm('请选择收货地址', {
-						btn: ['知道了'] //按钮
-					}, function(){
-						layer.msg('我这就去', {icon: 1});
-					});
-					return false;
-				}
+				// if(address == "0"){
+				// 	layer.confirm('请选择收货地址', {
+				// 		btn: ['知道了'] //按钮
+				// 	}, function(){
+				// 		layer.msg('我这就去', {icon: 1});
+				// 	});
+				// 	return false;
+				// }
 
 
 				var formData = new FormData();
@@ -199,11 +199,11 @@
 		            		console.log(msg);
 							
 							layer.open({
-								content: '订制成功，请等待管理员审核',
+								content: '请继续下一步',
 								btn: '我知道了',
 								shadeClose: false,
 								yes: function(){
-									window.location.href = 'http://' + domain + '/mobile/order/index/status/3'
+									window.location.href = 'http://' + domain + '/mobile/cart/index?is_customized=1'
 								}
 							});
 		            	}

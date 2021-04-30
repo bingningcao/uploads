@@ -232,6 +232,7 @@ class User extends MobileBase
 			'quantity'					=>				$num,//数量
 			'weight_class_id'			=>				2,//默认单位（克）
 			'customized_params'			=>				$customized_params,
+			'shipping'					=>				1, //是否需要运送
 		);
 		$goods_id = Db::name('goods')->insertGetId($data);
 
@@ -241,40 +242,36 @@ class User extends MobileBase
 
 			//订单表
 				$order = array();
-				$order['order_num_alias'] = build_order_no(); //订单号
 				$order['pay_subject'] = $username.'_定制的酒瓶';
 				$order['uid'] = $uid;
 				$order['name'] = $username;
 				$order['order_status_id'] = 3;
-				$order['date_added'] = time();
 				$order['is_customized'] = 1; //是否定制
-				$order['address_id'] = $address;////收货地址
-				$order_id = Db::name('order')->insertGetId($order);
+				session('order',$order);
 			//订单表
 
 			//订单商品表
 				$order_goods = array();
-				$order_goods['order_id'] = $order_id;
 				$order_goods['name'] = $username.'_定制的酒瓶';
 				$order_goods['goods_id'] = $goods_id;
 				$order_goods['quantity'] = $num;
-				Db::name('order_goods')->insert($order_goods);
+				$_SESSION['order_goods'] = $order_goods;
+				session('order_goods',$order_goods);
 			//订单商品表
+
 
 			//订单历史
 				$history = array();
-				$history['order_id'] = $order_id;
 				$history['order_status_id'] = 3;
 				$history['notify'] = 0;
 				$history['date_added'] = time();
 				$history['comment'] = $msg;
-				Db::name('order_history')->insert($history);
+				session('history',$history);
 			//订单历史
 
 			//价格
 				$order_total = array(
 					[
-						'order_id'=>$order_id,
 						'code'=>'sub_total',
 						'title'=>'商品价格',
 						'text'=>'￥0',
@@ -282,7 +279,6 @@ class User extends MobileBase
 						'sort_order'=>0
 					],
 					[
-						'order_id'=>$order_id,
 						'code'=>'shipping',
 						'title'=>'运费',
 						'text'=>'￥0',
@@ -290,7 +286,6 @@ class User extends MobileBase
 						'sort_order'=>0
 					],
 					[
-						'order_id'=>$order_id,
 						'code'=>'total',
 						'title'=>'总价	',
 						'text'=>'￥0',
@@ -298,11 +293,22 @@ class User extends MobileBase
 						'sort_order'=>0
 					],
 				);
-				foreach($order_total as $k=>$v){
-					Db::name('order_total')->insert($v);
-				}
+				session('order_total',$order_total);
+				// $_SESSION['order_total'] = $order_total;
+				// foreach($order_total as $k=>$v){
+				// 	Db::name('order_total')->insert($v);
+				// }
 			//价格
 
+			//购物车
+				$cart = array(
+					'type'			=>			'money',
+					'uid'			=>			$uid,
+					'goods_id'		=>			$goods_id,
+					'quantity'		=>			$num //数量
+				);
+				Db::name('cart')->insert($cart);
+			//购物车
 			return json(['code'=> 10000,'msg'=>'定制成功','gid'=>$goods_id]);
 		}else{
 			return json(['code'=>100001,'msg'=>'定制失败']);
@@ -313,7 +319,43 @@ class User extends MobileBase
 	
 
 
+	function xb_insertTable(){
+		$order = input('post.');
+		$order['date_added'] = time();
+		$address_id = $order['address_id'];
+		$address = Db::name('address')->where('address_id',$address_id)->find();
+		$city_id = $address['city_id'];
+		$country_id = $address['country_id'];
+		$province_id = $address['province_id'];
+		$order['shipping_city_id'] = $city_id;
+		$order['shipping_province_id'] = $province_id;
+		$order['shipping_country_id'] = $country_id;
 
+		$order_id = Db::name('order')->insertGetId($order);
+		
+		//订单商品表
+			$order_goods = session('order_goods');
+			$order_goods['order_id'] = $order_id;
+			Db::name('order_goods')->insert($order_goods);
+		//订单商品表
+		
+		//订单历史
+			$history = session('history');
+			$history['order_id'] = $order_id;
+			Db::name('order_history')->insert($history);
+		//订单历史
+		
+		// 价格
+			$order_total = session('order_total');
+			foreach($order_total as $k=>$v){
+				$order_total[$k]['order_id'] = $order_id;
+			}
+			foreach($order_total as $k=>$v){
+				Db::name('order_total')->insert($v);
+			}
+		// 价格
+		return json(['code'=> 10000,'msg'=>'定制成功','gid'=>$order_goods['goods_id']]);
+	}
 
 
 	
