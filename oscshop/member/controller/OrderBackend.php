@@ -33,7 +33,17 @@ class OrderBackend extends AdminBase{
 	 
  	public function show_order(){
      	
-		$this->assign('data',osc_order()->order_info(input('param.id')));		
+		$this->assign('data',osc_order()->order_info(input('param.id')));
+		$d = osc_order()->order_info(input('param.id'));
+		$province_id = $d['order']['province_id'];
+		$country_id = $d['order']['country_id'];
+		$city_id = $d['order']['city_id'];
+
+		$province_name = Db::name('area')->where('area_id',$province_id)->find()['area_name'];
+		$city_name = Db::name('area')->where('area_id',$city_id)->find()['area_name'];
+		$country_name = Db::name('area')->where('area_id',$country_id)->find()['area_name'];
+		$pcc = $province_name . ' ' . $city_name . ' ' . $country_name; //三级地址
+		$this->assign('pcc',$pcc);
 		$this->assign('crumbs','订单详情');
 				
     	return $this->fetch('show');

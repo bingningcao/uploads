@@ -56,8 +56,8 @@
 				    <td>{$data.order.email}</td>
 				</tr>
 				  <tr>
-				    <td>联系电话</td>
-				    <td>{$data.order.telephone}</td>
+				    <td>联系地址及电话</td>
+				    <td><?php echo $pcc?> &nbsp;&nbsp; <?php echo $data['order']['address']?> &nbsp;&nbsp; | &nbsp;&nbsp;  {$data.order.telephone}</td>
 				</tr> 
 				<?php if($data['order']['points_order']==0){ ?>
 				<tr>
